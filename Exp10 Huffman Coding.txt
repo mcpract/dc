@@ -1,0 +1,77 @@
+clc;
+ clear all;
+ close all;
+ code_length=0;
+ x=input('Enter number of symbols: ');
+ for m=1:x
+ symbols(m)=input('Enter the symbol number: ');
+ p(m)=input('Enter the probability: ');
+ end
+ Hx=0
+ for m=1:x
+ [dict,avglen]=huffmandict(symbols,p)
+ hcode=huffmanenco(m,dict)
+ dsig = huffmandeco(hcode,dict)
+ code_length=length(hcode)
+ Hx=Hx+(p(m)*(-log(p(m)))/(log(2)));
+ end
+ display(Hx);
+ Efficiency=(Hx/avglen)*100
+ Disp(Efficiency)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Enter number of symbols: 6
+% Enter the symbol number: 1, probability: 0.3
+% Enter the symbol number: 2, probability: 0.25
+% Enter the symbol number: 3, probability: 0.2
+% Enter the symbol number: 4, probability: 0.12
+% Enter the symbol number: 5, probability: 0.05
+% Enter the symbol number: 6, probability: 0.08
+
+% Probability Vector p:
+% p = [0.3000, 0.2500, 0.2000, 0.1200, 0.0800, 0.0500]
+
+% Huffman Code Dictionary (dict):
+% dict = {[1] [0 0]; [2] [0 1]; [3] [1 1]; [4] [1 0 1]; [5] [1 0 0 0]; [6] [1 0 0 1]}
+
+% Average Code Length (avglen): 2.3800
+
+% Entropy (Hx): 2.3601
+
+% Coding Efficiency: 99.1659%
+
+
+% Source coding is used for efficient representation of data in a communication system.
+% There are two key requirements for an encoder:
+% 1. The code must be in binary form.
+% 2. It should be uniquely decodable.
+% Shannon's coding theorem suggests that coding efficiency improves if fewer bits are assigned to more probable messages.
+
+% Two variable-length coding techniques are:
+% 1. Huffman coding (bottom-up approach)
+% 2. Shannon-Fano coding (top-down approach)
+
+% Huffman Coding:
+% Huffman coding compresses data by assigning shorter codes to more frequent characters.
+% It creates a tree based on character frequencies, generating codes for each character.
+% Decoding is done using the same tree, ensuring no ambiguity using the prefix code property (a code is not a prefix of any other code).

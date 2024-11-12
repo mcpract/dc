@@ -1,0 +1,51 @@
+
+clc;
+ clear all;
+ M=input('Number_Symbols=');
+ x=0:M-1;
+ N=1;
+ OFF=0;
+ z=pskmod(x,M);
+ figure(1)
+ scatterplot(z,N,OFF,"r+");
+ N=1;
+ OFF=0;
+ y=qammod(x,M);
+ figure(2)
+ scatterplot(y,N,OFF,"bo");
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% In M-ary PSK, N bits are grouped into symbols, where M = 2^N, and phase 
+% difference between symbols is 2*pi/M. In the constellation diagram, symbols 
+% are placed around a phase circle, keeping a constant amplitude. Increasing N 
+% reduces bandwidth but raises error probability due to reduced symbol distance d.
+
+
+% QAM is a system that combines phase shift keying and amplitude shift keying, 
+% also known as QASK or QAM. If the carrier's amplitude varies along with the phase, 
+% points lie inside the circle as well. This improves noise immunity by allowing 
+% signal vectors to differ in both phase and amplitude.

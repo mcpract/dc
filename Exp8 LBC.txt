@@ -1,0 +1,115 @@
+clc;
+clear all;
+k=input('Enter the length of msg word:');
+n=input('Enter the length of codeword:');
+p=input('Enter the parity matrix:');
+G=[eye(k);p;];m=input('Enter the length of msg word:');
+
+H=[eye(n-k) p']
+dtable=syndtable(H)
+R=input('Enter the received code word');
+%S=R*H'
+S_B=rem(R*H' ,2)
+S_D=bi2de(S_B, 'left-msb')
+if(S_D==0)
+    disp('The recieved codeword is valid:')
+else
+    disp('The corrected codeword is invalid:')
+    
+E=dtable(S_D+1, :)
+
+%CC=R+E
+disp('The corrected codeword is: ')
+cc=rem(R+E, 2)
+msg=cc(1:k)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Enter the length of message word: 3
+% Enter the length of codeword: 6
+% Enter the parity matrix: [1 0 1; 0 1 1; 1 1 0]
+% After calculating the parity-check matrix (H):
+% H =  1   0   0   1   0   1
+%      0   1   0   0   1   1
+%      0   0   1   1   1   0
+%
+% Decoding table (dtable) with error patterns:
+% dtable = 0   0   0   0   0   0
+%          0   0   1   0   0   0
+%          0   1   0   0   0   0
+%          0   0   0   0   1   0
+%          1   0   0   0   0   0
+%          0   0   0   1   0   0
+%          0   0   0   0   0   1
+%          1   0   0   0   1   0
+%
+% Enter the received codeword: [0 0 1 1 1 0]
+% Syndrome vector S_B = [1 1 1]
+% Error location in decoding table S_D = 7
+% The corrected codeword is invalid.
+% Error pattern E = [1 0 0 0 1 0]
+%
+% The corrected codeword is:
+% cc = [1 0 1 1 0 0]
+%
+% Extracted message (msg) = [1 0 1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+% Linear Block Coding (LBC) Properties:
+% 1. The sum of two codewords is also a codeword.
+% 2. The all-zero word is a codeword.
+% 3. Minimum Hamming distance (dmin) between codewords equals the minimum weight of any non-zero codeword.
+
+% Matrix Description of Linear Block Codes:
+% - Generator matrix (G) is k x n, where k = message length, n = codeword length.
+% - Codeword: C = M * G, with 2^k possible codewords.
+% - Minimum Hamming Distance (dmin) defines error capabilities: 
+%   Error detection td = dmin - 1, error correction tc = (dmin - 1) / 2.
+
+% LBC Decoding:
+% - Parity check matrix: H = [P'; In-k].
+% - Syndrome vector: S = r * H', where a non-zero S indicates an error.
+% - Error correction: C = r ⊕ E, using lookup table for error vector (E).
+
+% Basic Definitions:
+% - Word: Sequence of symbols.
+% - Code: Set of codewords (vectors).
+% - Hamming Weight: Non-zero elements in a codeword, denoted w(c).
+% - Hamming Distance: Difference between two codewords, d(c1, c2) = w(c1 - c2).
+% - Block Code: Set of fixed-length codewords with block length n.
+% - Code Rate: Ratio (k/n), indicating information fraction in codewords.
+% - Minimum Distance: Smallest Hamming distance between any codewords.
+% - Minimum Weight: Smallest weight of any non-zero codeword.
+
